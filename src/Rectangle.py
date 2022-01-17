@@ -10,5 +10,4 @@ class Rectangle(Figure):
             self.area = a * b
         except (AttributeError, TypeError) as e:
             print("Error occured: ", e)
-            self.perimeter = "N/A"
-            self.area = "N/A"
+            
