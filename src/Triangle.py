@@ -19,6 +19,3 @@ class Triangle(Figure):
             self.perimeter = a + b + c
             p = self.perimeter / 2
             self.area = math.sqrt(p * (p - a) * (p - b) * (p - c))
-        else:
-            self.perimeter = "N/A"
-            self.area = "N/A"
