@@ -12,5 +12,3 @@ class Circle(Figure):
             self.area = math.pi * r * r
         except (AttributeError, TypeError) as e:
             print("Error occured: ", e)
-            self.perimeter = "N/A"
-            self.area = "N/A"
