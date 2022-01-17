@@ -9,5 +9,3 @@ class Square(Figure):
             self.area = a * a
         except (AttributeError, TypeError) as e:
             print("Error occured: ", e)
-            self.perimeter = "N/A"
-            self.area = "N/A"
