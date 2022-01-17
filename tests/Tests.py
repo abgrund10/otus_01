@@ -13,8 +13,6 @@ def test_square_positive():
 def test_square_negative():
     sq = Square('n')
     assert sq.name == "Square"
-    assert sq.area == "N/A"
-    assert sq.perimeter == "N/A"
 
 def test_circle_positive():
     cir = Circle(1)
@@ -25,8 +23,6 @@ def test_circle_positive():
 def test_circle_negative():
     cir = Circle('k')
     assert cir.name == "Circle"
-    assert cir.perimeter == "N/A"
-    assert cir.area == "N/A"
 
 def test_rect_positive():
     rect = Rectangle(2, 4)
@@ -37,8 +33,6 @@ def test_rect_positive():
 def test_rect_negative():
     rect = Rectangle('k', 6)
     assert rect.name == "Rectangle"
-    assert rect.perimeter == "N/A"
-    assert rect.area == "N/A"
 
 def test_triangle_positive():
     tri = Triangle(13, 14, 15)
@@ -49,5 +43,3 @@ def test_triangle_positive():
 def test_triangle_negative():
     tri = Triangle(13, 14, 150)
     assert tri.name == "Triangle"
-    assert tri.perimeter == "N/A"
-    assert tri.area == "N/A"
