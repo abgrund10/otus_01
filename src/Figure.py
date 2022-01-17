@@ -9,4 +9,4 @@ class Figure:
         try:
             self.area + figure.area
         except ValueError:
-            raise
+            raise ValueError("ValueError exception thrown")
