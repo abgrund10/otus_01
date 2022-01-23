@@ -1,7 +1,6 @@
 import csv
 import itertools
 import urllib.request
-
 import json
 from itertools import islice
 
@@ -52,18 +51,16 @@ if ostatok > 0:
     with open('books.csv') as books:
         csv_reader = csv.reader(books, delimiter=',')
         books.readline()
-        for user in result_updated:
-            x = json.load(user)
-            print('')
-            print(x)
-            books_array = []
-            books_array.append(x['books'])
-            print('books array')
-            print(books_array)
-            print('')
+        for user in result_updated[0:ostatok]:
+            user = json.dumps(user)
+            x = json.loads(user)
+            books_array = [x['books']]
+            print('before')
+            print(x['books'])
             for row in itertools.islice(csv_reader, lower_limit, upper_limit):
                 books_array.append(row)
             x['books'] = books_array
-            result_updated.append(x)
-print('final array')
+            print('')
+            print('update')
+            print(x['books'])
 print(result_updated)
