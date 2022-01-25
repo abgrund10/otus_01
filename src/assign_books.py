@@ -59,4 +59,4 @@ if residue > 0:
             i += 1
 
 with open('result.json', mode='w', encoding='utf8') as f:
-    json.dump(result_updated, f)
+    json.dump(result_updated, f, indent=4)
