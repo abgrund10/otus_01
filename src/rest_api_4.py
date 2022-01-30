@@ -1,30 +1,17 @@
-import webbrowser
-
-import pytest
-from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-
-@pytest.fixture
-def driver(url, browser):
-    try:
-        # webbrowser.get(browser).open_new(url)
-        stroka = "webdriver.{browser}()".format(browser=browser)
-        driver = eval(stroka)
-        driver.get(url)
-    except Exception:
-        raise Exception
-    return driver
+from otus_01.src.page import MainPage
 
 
 def test_header(driver):
     try:
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, 'navbar-brand')))
-        brand = driver.find_element(By.CSS_SELECTOR, "img[src='application/view/image/icon/opencart-logo.png']")
-        assert brand.get_attribute("title") == 'OpenCart - Open Source Shopping Cart Solution'
+      #  WebDriverWait(driver, 20).until(EC.presence_of_element_located(LOGO_BUTTON))
+       # brand = driver.find_element(LOGO_IMG)
+        main_page = MainPage(driver)
+        main_page.is_logo_present()
+        assert main_page.is_logo_present().get_attribute("title") == 'OpenCart - Open Source Shopping Cart Solution'
     except TimeoutException:
         print(TimeoutException)
     finally:
