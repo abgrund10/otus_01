@@ -1,20 +1,14 @@
-import argparse
+from urllib.error import URLError
 
 import requests
-import pytest
 
+def test_url(url, status_code):
+    response = requests.get(url)
 
-@pytest.fixture
-def url(request):
-    return request.config.getoption('--url')
+    try:
+        assert int(status_code) == 200
+        assert response.status_code == 200
 
-
-@pytest.fixture
-def status_code(request):
-    return request.config.getoption("--status_code")
-
-
-def test_url():
-    response_new = requests.get(url())
-    st_code = response_new.status_code
-    assert status_code == st_code
+    except URLError:
+        assert int(status_code) == 404
+        assert response.status_code == 404
