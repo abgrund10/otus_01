@@ -19,11 +19,12 @@ def test_button_free_download(driver):
     except TimeoutException:
         print(TimeoutException)
 
+
 def test_visit_marketplace_button(driver):
     try:
         main_page = MainPage()
-        main_page.is_free_download_button_present(driver)
-        assert main_page.is_free_download_button_present(driver).getText() == 'Free Download'
+        main_page.is_visit_marketplace_button_present(driver)
+        assert main_page.is_visit_marketplace_button_present(driver).getText() == 'Visit Marketplace'
     except TimeoutException:
         print(TimeoutException)
 

@@ -15,5 +15,5 @@ class MainPage:
     def is_free_download_button_present(self, driver):
         return wait_and_return_button(driver, MainPageLocators.FREE_DOWNLOAD_BUTTON)
 
-    def is_visit_marketplace_present(self, driver):
+    def is_visit_marketplace_button_present(self, driver):
         return wait_and_return_button(driver, MainPageLocators.MARKETPLACE_BUTTON)
