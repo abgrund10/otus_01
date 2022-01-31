@@ -17,3 +17,9 @@ class MainPage:
 
     def is_visit_marketplace_button_present(self, driver):
         return wait_and_return_button(driver, MainPageLocators.MARKETPLACE_BUTTON)
+
+    def is_view_demo_button_present(self, driver):
+        return wait_and_return_button(driver, MainPageLocators.VIEWDEMO_BUTTON)
+
+    def is_featured_section_present(self, driver):
+        return driver.find_element(*MainPageLocators.FEATURED_SECTION)

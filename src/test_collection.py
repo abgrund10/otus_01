@@ -29,5 +29,23 @@ def test_visit_marketplace_button(driver):
         print(TimeoutException)
 
 
+def test_view_demo_button(driver):
+    try:
+        main_page = MainPage()
+        main_page.is_view_demo_button_present(driver)
+        assert main_page.is_view_demo_button_present(driver).getText() == 'View Demo'
+    except TimeoutException:
+        print(TimeoutException)
+
+
+def test_featured_section(driver):
+    try:
+        main_page = MainPage()
+        main_page.is_featured_section_present(driver)
+        assert main_page.is_featured_section_present(driver).getText() == 'Featured in the Press by'
+    except TimeoutException:
+        print(TimeoutException)
+
+
 def test_teardown(driver):
     driver.quit()
