@@ -6,8 +6,7 @@ def test_url(url, status_code):
     response = requests.get(url)
 
     try:
-        assert int(status_code) == 200
-        assert response.status_code == 200
+        assert r.status_code == int(status_code)
 
     except URLError:
         assert int(status_code) == 404
