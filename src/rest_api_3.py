@@ -27,11 +27,13 @@ def test_header(response):
     assert response.headers['Content-Type'] != 'application/json'
 
 
+@pytest.mark.smoke
 @pytest.mark.parametrize("i, key, value", [(0, 'name', "id labore ex et quam laborum"), (1, 'name', "quo vero reiciendis velit similique earum")])
 def test_json_content(i, key, value):
     assert json_data()[i][key] == value
 
 
+@pytest.mark.smoke
 @pytest.mark.parametrize("extra_raw, status_code", [(None, 200), ('ddd', 404)])
 def test_response_code(extra_raw, status_code):
     if extra_raw is None:
@@ -40,3 +42,11 @@ def test_response_code(extra_raw, status_code):
         url_formed = URL + str(extra_raw)
     response_new = requests.get(url_formed)
     assert response_new.status_code == status_code
+
+
+> def ingredients(func):
+...     def wrapper():
+...         print("#помидоры#")
+...         func()
+...         print("~салат~")
+...     return wrapper

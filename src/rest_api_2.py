@@ -2,7 +2,7 @@
 testing rest methods for url-2
 """
 import json
-
+from jsonschema import validate
 import pytest
 import requests
 
@@ -27,11 +27,13 @@ def test_header(response):
     assert response.headers['Content-Type'] != 'application/json'
 
 
+@pytest.mark.smoke
 @pytest.mark.parametrize("i, key, value", [(0, 'name', "10 Barrel Brewing Co"), (1, 'name', "2Kids Brewing Company")])
 def test_json_content(i, key, value):
     assert json_data()[i][key] == value
 
 
+@pytest.mark.smoke
 @pytest.mark.parametrize("extra_raw, status_code", [(None, 200), ('ddd', 200)])
 def test_response_code(extra_raw, status_code):
     if extra_raw is None:
