@@ -22,4 +22,7 @@ class MainPage:
         return wait_and_return_button(driver, MainPageLocators.VIEWDEMO_BUTTON)
 
     def is_featured_section_present(self, driver):
-        return driver.find_element(*MainPageLocators.FEATURED_SECTION)
+        return wait_and_return_button(driver, MainPageLocators.LEARN_MORE_BUTTON)
+
+    def is_learnmore_section_present2(self, driver):
+        return driver.find_element(*MainPageLocators.LEARN_MORE_BUTTON)

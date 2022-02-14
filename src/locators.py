@@ -6,7 +6,7 @@ class MainPageLocators(object):
 
     LOGO_BUTTON = (By.CLASS_NAME, 'navbar-brand')
     LOGO_IMG = (By.CSS_SELECTOR, "img[src='application/view/image/icon/opencart-logo.png']")
-    FREE_DOWNLOAD_BUTTON = (By.XPATH, "//*[@class='btn.btn-success.btn-xl']")
-    MARKETPLACE_BUTTON = (By.XPATH, "//*[@class='btn.btn-primary.btn-xl']")
-    VIEWDEMO_BUTTON = (By.XPATH, "//*[@class='btn.btn-white.btn-xl']")
-    FEATURED_SECTION = (By.CLASS_NAME, 'col-md-3')
+    FREE_DOWNLOAD_BUTTON = (By.XPATH, "//a[@href='https://www.opencart.com/index.php?route=cms/download']")
+    MARKETPLACE_BUTTON = (By.XPATH, "//a[@href='https://www.opencart.com/index.php?route=marketplace/extension']")
+    VIEWDEMO_BUTTON = (By.XPATH, "//a[@href='https://www.opencart.com/index.php?route=cms/demo']")
+    LEARN_MORE_BUTTON = (By.XPATH, "//a[@href='http://forum.opencart.com']")
