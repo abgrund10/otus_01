@@ -1,11 +1,9 @@
 import urllib
 import webbrowser
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-from otus_01.src.page import RemoveProductPage
+#from otus_01.src.page import RemoveProductPage
 
 
 def wait_and_return_button(driver, button):
@@ -20,8 +18,8 @@ def open_url(url):
     return webbrowser.open(url, new=0, autoraise=True)
 
 
-def filter_item(driver, filter_item):
-    RemoveProductPage().is_filter_present(driver).send_keys(filter_item)
-    return RemoveProductPage().is_filter_btn_present(driver).click()
+#def filter_item(driver, filter_item):
+#    RemoveProductPage().is_filter_present(driver).send_keys(filter_item)
+ #   return RemoveProductPage().is_filter_btn_present(driver).click()
 
 

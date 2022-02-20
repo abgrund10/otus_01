@@ -162,10 +162,10 @@ class AddProductPage:
         return wait_and_return_button(driver, AdminAddProductPageLocators.METATAGKEYWRD_INPUT)
 
     def is_producttag_field_present(self, driver):
-        return wait_and_return_button(driver, AdminAddProductPageLocators.PRODUCTNAME)
+        return wait_and_return_button(driver, AdminAddProductPageLocators.PRODUCTTAGS)
 
     def is_producttag_input_present(self, driver):
-        return wait_and_return_button(driver, AdminAddProductPageLocators.PRODUCTNAME_INPUT)
+        return wait_and_return_button(driver, AdminAddProductPageLocators.PRODUCTTAGS_INPUT)
 
     def is_btn_save_product_prsent(self, driver):
         return wait_and_return_button(driver, AdminAddProductPageLocators.SAVE_BTN)
