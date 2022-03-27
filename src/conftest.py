@@ -19,9 +19,9 @@ def browser(request):
 
 @pytest.fixture(scope="module")
 def driver(url, browser):
-    try:
-        driver = eval("webdriver.{browser}()".format(browser=browser.title()))
-        driver.get(url)
-    except Exception:
-        raise Exception
-    return driver
+    driver = eval("webdriver.{browser}()".format(browser=browser.title()))
+    driver.get(url)
+
+@pytest.fixture(scope="module")
+def test_teardown(driver, url):
+    driver.quit()

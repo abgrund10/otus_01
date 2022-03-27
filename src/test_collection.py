@@ -57,8 +57,6 @@ def test_see_marketplace_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         MainPage().is_visit_marketplace_button_present(driver).click()
         assert MarketPage().is_marketheader_present(driver).text == 'Welcome to OpenCart Extension Store'
-    else:
-        pytest.skip()
 
 
 def test_marketplace_categories_present(driver, url):
@@ -92,7 +90,3 @@ def test_check_registration_form(driver, url):
         dropdown = Select(RegistrationPage().is_country_field_present(driver))
         RegistrationPage().is_country_field_present(driver).click()
         dropdown.select_by_index(1)
-
-
-def test_teardown(driver, url):
-    driver.quit()

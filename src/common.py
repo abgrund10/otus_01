@@ -16,10 +16,3 @@ def wait_and_return_button(driver, button):
 
 def open_url(url):
     return webbrowser.open(url, new=0, autoraise=True)
-
-
-#def filter_item(driver, filter_item):
-#    RemoveProductPage().is_filter_present(driver).send_keys(filter_item)
- #   return RemoveProductPage().is_filter_btn_present(driver).click()
-
-

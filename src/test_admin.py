@@ -72,7 +72,3 @@ def test_add_new_customer(driver):
 def test_new_customer_is_added(driver):
     common_filter_item(driver, 'Nasport First')
     assert len(RemoveProductPage().is_item_selector_present(driver)) != 0
-
-
-def test_teardown(driver):
-    driver.quit()

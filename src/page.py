@@ -44,12 +44,7 @@ class MarketPage:
         return found
 
     def is_product_card_present(self, driver):
-        try:
-            wait_and_return_button(driver, MarketPlaceLocators.PRODUCT_LINK)
-            found = True
-        except:
-            found = False
-        return found
+        return wait_and_return_button(driver, MarketPlaceLocators.PRODUCT_LINK)
 
 
 class LoginPage:
@@ -59,7 +54,7 @@ class LoginPage:
 
     def is_login_field_present(self, driver):
         return driver.find_element(*LoginPageLocators.LOGIN_FIELD)
-        #return wait_and_return_button(driver, LoginPageLocators.LOGIN_FIELD)
+        # return wait_and_return_button(driver, LoginPageLocators.LOGIN_FIELD)
 
     def is_password_field_present(self, driver):
         return wait_and_return_button(driver, LoginPageLocators.PASSWORD_FIELD)
@@ -100,6 +95,7 @@ class AdminLoginPage:
     def is_admin_loginbutton_present(self, driver):
         return wait_and_return_button(driver, AdminLoginPageLocators.LOGINBUTTON)
 
+
 class DashboardPage:
 
     def is_admin_navigation_present(self, driver):
@@ -125,6 +121,7 @@ class DashboardPage:
 
     def is_customers_page_in_cat_present(self, driver):
         return wait_and_return_button(driver, AdminDashboardPageLocators.CUSTOMERS_SECTION)
+
 
 class AddProductPage:
 
@@ -185,10 +182,12 @@ class RemoveProductPage:
     def is_delete_btn_present(self, driver):
         return wait_and_return_button(driver, AdminProductsPageLocators.DELETE_BTN)
 
+
 class CustomersPage:
 
     def is_customer_list(self, driver):
         return wait_and_return_button(driver, AdminCustomerListLocators.CUSTOMERLIST)
+
 
 class NewCustomerPage:
 
