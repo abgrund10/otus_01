@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium.webdriver.support.ui import Select
 from locators import MainPageLocators
@@ -11,15 +12,17 @@ def test_header(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         main_page = MainPage()
         main_page.is_logo_present(driver)
-        assert main_page.is_img_title_matches(driver) == 'OpenCart - Open Source Shopping Cart Solution'
+        with allure.step("Image matches text"):
+            assert main_page.is_img_title_matches(driver) == 'OpenCart - Open Source Shopping Cart Solution'
     else:
         pytest.skip()
 
 
 def test_header_second_version(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
-        text = driver.find_element(*MainPageLocators.LOGO_IMG).get_attribute("title")
-        assert text == 'OpenCart - Open Source Shopping Cart Solution'
+        with allure.step("Title matches expected title"):
+            text = driver.find_element(*MainPageLocators.LOGO_IMG).get_attribute("title")
+            assert text == 'OpenCart - Open Source Shopping Cart Solution'
     else:
         pytest.skip()
 

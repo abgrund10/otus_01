@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium import webdriver
 
@@ -9,7 +10,8 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="module")
 def url(request):
-    return request.config.getoption("--url")
+    with allure.step(f'POST request to:'):
+        return request.config.getoption("--url")
 
 
 @pytest.fixture(scope="module")
