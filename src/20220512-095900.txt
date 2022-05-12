@@ -1,0 +1,7 @@
+Пользователи системы:{'message+', 'colord', 'summerp+', 'tank', 'avahi', 'syslog', 'rtkit', 'whoopsie', 'root', 'systemd+', 'kernoops'}
+Процессов запущено:39264.0
+Пользовательских процессов:{'message+': 1, 'colord': 1, 'summerp+': 1, 'tank': 0, 'avahi': 2, 'syslog': 1, 'rtkit': 1, 'whoopsie': 1, 'root': 191, 'systemd+': 2, 'kernoops': 2}
+Всего памяти используется:54.9% memmory_usage
+Всего CPU используется:89.4% CPU
+Больше всего памяти использует:root
+Больше всего CPU использует:root
