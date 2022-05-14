@@ -1,8 +1,12 @@
 import datetime
 import subprocess
-import re
+import functools
 
-result = subprocess.Popen("ps aux", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+stdout, stderr = subprocess.Popen("ps aux", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+result = stdout.decode()
+
+get_users_check, stderr2 = subprocess.Popen("awk -F: '{ print $1}' /etc/passwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+get_users_check = get_users_check.decode()
 
 unique_usernames = set()
 unique_usernames_final = set()
@@ -10,24 +14,46 @@ list_of = []
 list_of2 = {}
 memmory_usage = 0.0
 cpu_usage = 0.0
+list_of_users_check = []
+user_processes_dict = {}
 
-
-def remove_epmty_vals(items):
-    for item in items:
-        if item == '':
-            items.remove('')
-    return items
-
-
-# create list of unique usernames
-for elem in str(result).split("\\n"):
-    items = elem.split(" ")
-    remove_epmty_vals(remove_epmty_vals(remove_epmty_vals(items)))
+# create list of processes per user without first and last rows
+for elem in str(result).split("\n"):
+    items = elem.split()
     list_of.append(items)
-    new_name2 = str(elem).replace("   ", "")
-    unique_usernames.add(str(re.findall(r"\D+", new_name2)[0]).replace(" ", ""))
 list_of.remove(list_of[0])
+list_of.remove(list_of[len(list_of)-1])
 
+# calc processes for current_user
+def calc_users_processes(user):
+    user_process_amount = 0
+    for user_pr in list_of:
+        if user_pr[0] == user:
+            user_process_amount += 1
+    return user_process_amount
+
+
+#fill dictionary of users & amount of their processes
+for row in list_of:
+    unique_usernames.add(row[0])
+    user_processes_dict[row[0]] = calc_users_processes(row[0])
+
+
+
+
+#create list of users from get_users_check  to compare in future
+for elem2 in str(get_users_check).split("\\n"):
+    items = elem2.split()
+    list_of_users_check.append(items)
+    new_name2 = str(elem2).replace("   ", "")
+
+"""
+check if users are in the list_of_users_check list
+if functools.reduce(lambda x, y: x and y, map(lambda p, q: p == q, list_of_users_check, unique_usernames), True):
+    print("The lists l1 and l2 are the same")
+else:
+            print("The lists l1 and l2 are not the same")
+"""
 
 def calculate_item_in_table(id, listed_array):
     column = 0
@@ -56,43 +82,22 @@ cpu_usage_max = max_val_in_table(2, list_of[:len(list_of) - 2])
 memmory_usage = calculate_item_in_table(3, list_of[:len(list_of) - 2])
 memmory_usage_max = max_val_in_table(3, list_of[:len(list_of) - 2])
 
-print(cpu_usage_max)
-print(cpu_usage)
-print(memmory_usage_max)
-print(memmory_usage)
 
 # get  name of current user in case if needed
 current_user = str(subprocess.check_output('whoami', shell=True)).split("\\n")[0]
 current_user = current_user.split("'")[1]
 
 
-# calc processes for current_user
-def calc_users_processes(current_user):
-    user_process_amount = 0
-    for user_pr in list_of[0:len(list_of) - 2]:
-        if user_pr[0] == current_user:
-            user_process_amount += 1
-    return user_process_amount
-
-
-user_processes_dict = {}
-
-# create set with unique and correct values
-for itz in unique_usernames:
-    if "b'" not in itz:
-        unique_usernames_final.add(itz)
-
-for name in unique_usernames_final:
-    user_processes_dict[name] = calc_users_processes(name)
-
-print("Пользователи системы:" + str(unique_usernames_final))
-print("Процессов запущено:" + str(max_val_in_table(1, list_of[:len(list_of) - 2])))
+print("Пользователи системы:" + str(unique_usernames))
+print("Процессов запущено:" + str(len(list_of)))
 print("Пользовательских процессов:" + str(user_processes_dict))
 
 print("Всего памяти используется:" + str(memmory_usage) + '% memmory_usage')
 print("Всего CPU используется:" + str(cpu_usage) + '% CPU')
-print("Больше всего памяти использует:" + str(find_proc_by_val(memmory_usage_max, 3, list_of[:len(list_of) - 2])))
-print("Больше всего CPU использует:" + str(find_proc_by_val(cpu_usage_max, 2, list_of[:len(list_of) - 2])))
+print("Больше всего памяти использует:" + str(memmory_usage_max))
+print("Больше всего CPU использует:" + str(cpu_usage_max))
+
+
 
 filename = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 name = filename + '.txt'
