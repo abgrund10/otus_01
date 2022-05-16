@@ -5,6 +5,7 @@ import functools
 stdout, stderr = subprocess.Popen("ps aux", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 result = stdout.decode()
 
+print(result)
 get_users_check, stderr2 = subprocess.Popen("awk -F: '{ print $1}' /etc/passwd", shell=True, stdout=subprocess.PIPE,
                                             stderr=subprocess.PIPE).communicate()
 get_users_check = get_users_check.decode()
@@ -25,6 +26,7 @@ for elem in str(result).split("\n"):
 list_of.remove(list_of[0])
 list_of.remove(list_of[len(list_of) - 1])
 
+print("___________________________________________________________________")
 """ calc processes for current_user """
 
 
@@ -59,8 +61,8 @@ else:
 def calculate_item_in_table(item_id, listed_array):
     column = 0
     for tempora in listed_array:
-        column = round(column, 2) + round(float(tempora[item_id]), 2)
-    return column
+        column = column + float(tempora[item_id])
+    return round(column, 2)
 
 
 def max_val_in_table(item_id, listed_array):
@@ -75,14 +77,16 @@ def find_proc_by_val(val, item_id, listed_array):
     for tempora in listed_array:
         if val == float(tempora[item_id]):
             break
-    return listed_array[item_id][0]
+    return tempora[10]
 
 
-cpu_usage = calculate_item_in_table(2, list_of[:len(list_of) - 2])
-cpu_usage_max = max_val_in_table(2, list_of[:len(list_of) - 2])
-memmory_usage = calculate_item_in_table(3, list_of[:len(list_of) - 2])
-memmory_usage_max = max_val_in_table(3, list_of[:len(list_of) - 2])
+cpu_usage = calculate_item_in_table(2, list_of)
+cpu_usage_max = max_val_in_table(2, list_of)
+memmory_usage = calculate_item_in_table(3, list_of)
+memmory_usage_max = max_val_in_table(3, list_of)
 
+command_of_max_mem = find_proc_by_val(memmory_usage_max, 3, list_of)
+command_of_max_cpu = find_proc_by_val(cpu_usage_max, 2, list_of)
 """ get  name of current user in case if needed """
 current_user = str(subprocess.check_output('whoami', shell=True)).split("\\n")[0]
 current_user = current_user.split("'")[1]
@@ -90,11 +94,10 @@ current_user = current_user.split("'")[1]
 print("Пользователи системы:" + str(unique_usernames))
 print("Процессов запущено:" + str(len(list_of)))
 print("Пользовательских процессов:" + str(user_processes_dict))
-
 print("Всего памяти используется:" + str(memmory_usage) + '% memmory_usage')
 print("Всего CPU используется:" + str(cpu_usage) + '% CPU')
-print("Больше всего памяти использует:" + str(memmory_usage_max))
-print("Больше всего CPU использует:" + str(cpu_usage_max))
+print("Больше всего памяти использует:" + str(command_of_max_mem))
+print("Больше всего CPU использует:" + str(command_of_max_cpu))
 
 filename = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 name = filename + '.txt'
@@ -104,5 +107,5 @@ with open(name, "w") as file:
                "Пользовательских процессов:" + str(user_processes_dict) + "\n" +
                "Всего памяти используется:" + str(memmory_usage) + '% memmory_usage' + "\n" +
                "Всего CPU используется:" + str(cpu_usage) + '% CPU' + "\n" +
-               "Больше всего памяти использует:" + str(memmory_usage_max) + "\n" +
-               "Больше всего CPU использует:" + str(cpu_usage_max))
+               "Больше всего памяти использует:" + str(command_of_max_mem) + "\n" +
+               "Больше всего CPU использует:" + str(command_of_max_cpu))
