@@ -2,8 +2,34 @@ import datetime
 import subprocess
 import functools
 
+# open('output.txt', 'w') as f_out:
+temp_dict={}
+parced_dictionary = {}
+methods_and_amount = {}
+methods = ("GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE")
+
+with open('access1.log', 'r') as f_in:
+    for line in f_in.readlines():
+     try:
+        s = line.split('"')
+        parced_dictionary.update({'ip_time': s[0], "request_header_endpoint": s[1], "response_bytes": s[2], "endpoint_full": s[3], "User_Agent": s[5], "duration": s[6]})
+        print(parced_dictionary)
+     except IndexError as ex:
+        print(ex)
+
+def calc_amount_of_request(method):
+    request_amount = 0
+    for line in parced_dictionary:
+        if line[0] == method:
+            request_amount += 1
+    return request_amount
+
+for row in methods:
+    methods_and_amount[row] = calc_amount_of_request(row)
+    print(methods_and_amount[row])
+
 stdout, stderr = subprocess.Popen("ps aux", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-result = stdout.decode()
+result = 0# stdout.decode()
 
 get_users_check, stderr2 = subprocess.Popen("awk -F: '{ print $1}' /etc/passwd", shell=True, stdout=subprocess.PIPE,
                                             stderr=subprocess.PIPE).communicate()
