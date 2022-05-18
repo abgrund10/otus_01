@@ -20,7 +20,7 @@ user_processes_dict = {}
 
 # create list of processes per user without first and last rows
 for elem in str(result).split("\n"):
-    items = elem.split()
+    items = elem.split(maxsplit=10)
     list_of.append(items)
 list_of.remove(list_of[0])
 list_of.remove(list_of[len(list_of) - 1])
@@ -75,7 +75,7 @@ def find_proc_by_val(val, item_id, listed_array):
     for proc_name in listed_array:
         if val == float(proc_name[item_id]):
             break
-    return (proc_name[10]+' '+proc_name[11])[:20]
+    return (proc_name[10])[:20]
 
 
 cpu_usage = calculate_item_in_table(2, list_of)
