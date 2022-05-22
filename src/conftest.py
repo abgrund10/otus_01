@@ -12,8 +12,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture
 def url(request):
-    with allure.step(f'POST request to:'):
-        return request.config.getoption("--url")
+    return request.config.getoption("--url")
 
 
 @pytest.fixture
