@@ -1,7 +1,7 @@
 FROM python:3.8.10-alpine
 FROM alpine:3.12
 
-LABEL version="1" maintainer="abgrund"
+LABEL version="1"
 WORKDIR /app
 ADD . /app
 
