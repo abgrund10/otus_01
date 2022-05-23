@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium.webdriver.support.ui import Select
 from page import MainPage, MarketPage, LoginPage, RegistrationPage, AdminLoginPage, DashboardPage, AddProductPage, \
@@ -6,11 +7,18 @@ from page import MainPage, MarketPage, LoginPage, RegistrationPage, AdminLoginPa
 ADMIN_URL = 'https://demo.opencart.com/admin/'
 
 
+@allure.feature('Admin page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of filter')
+@allure.step("Check removal of RemoveProduct")
 def common_filter_item(driver, text):
     RemoveProductPage().is_filter_present(driver).send_keys(text)
     return RemoveProductPage().is_filter_btn_present(driver).click()
 
 
+@allure.feature('Admin page')
+@allure.story('Validation of page objects')
+@allure.step("Check navigation on AdminLoginPage")
 def test_admin_login(driver):
     AdminLoginPage().is_admin_login_present(driver).clear()
     AdminLoginPage().is_admin_pswd_present(driver).clear()
@@ -21,12 +29,18 @@ def test_admin_login(driver):
     assert DashboardPage().is_admin_navmenu_present(driver)
 
 
+@allure.feature('Dashboard page')
+@allure.story('Validation of page objects')
+@allure.step("Check navigation on DashboardPage")
 def test_open_products_page(driver):
     DashboardPage().is_admin_catalog_present(driver).click()
     DashboardPage().is_admin_catalog_products_present(driver).click()
     assert DashboardPage().is_admin_products_header_present(driver).get_attribute("innerHTML") == 'Products'
 
 
+@allure.feature('Dashboard page')
+@allure.story('Validation of page objects')
+@allure.step("Adding new products DashboardPage")
 def test_add_new_product(driver):
     DashboardPage().is_add_new_item_btn_present(driver).click()
     assert AddProductPage().is_tab_general_present(driver).get_attribute("innerHTML") == 'General'
@@ -45,17 +59,26 @@ def test_add_new_product(driver):
     AddProductPage().is_btn_save_product_prsent(driver).click()
 
 
+@allure.feature('RemoveProduct page')
+@allure.story('Validation of page objects')
+@allure.step("Removing products on RemoveProductPage")
 def test_remove_product(driver):
     common_filter_item(driver, 'Nasport Product')
     RemoveProductPage().is_item_selector_present(driver).click()
     RemoveProductPage().is_delete_btn_present(driver).click()
 
 
+@allure.feature('RemoveProduct page')
+@allure.story('Validation of page objects')
+@allure.step("Removing products on filtering")
 def test_items_is_removed(driver):
     common_filter_item(driver, 'Nasport Product')
     assert len(RemoveProductPage().is_item_selector_present(driver)) == 0
 
 
+@allure.feature('NewCustomer page')
+@allure.story('Validation of page objects')
+@allure.step("Adding customers")
 def test_add_new_customer(driver):
     DashboardPage().is_customers_in_catalog_present(driver).click()
     DashboardPage().is_customers_page_in_cat_present(driver).click()
@@ -69,6 +92,10 @@ def test_add_new_customer(driver):
     NewCustomerPage().is_pswd_confirm_field_present(driver).send_keys('MyfirstPasd')
     AddProductPage().is_btn_save_product_prsent(driver).click()
 
+
+@allure.feature('RemoveProduct page')
+@allure.story('Validation of page objects')
+@allure.step("Adding customers' test")
 def test_new_customer_is_added(driver):
     common_filter_item(driver, 'Nasport First')
     assert len(RemoveProductPage().is_item_selector_present(driver)) != 0
