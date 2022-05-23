@@ -9,7 +9,10 @@ REGISTER_URL = 'https://www.opencart.com/index.php?route=account/register'
 ADMIN_URL = 'https://demo.opencart.com/admin/'
 
 
-@allure.step("Image matches text")
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of header')
+@allure.step("Logo is present")
 def test_header(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         main_page = MainPage()
@@ -22,7 +25,10 @@ def test_header(driver, url):
         pytest.skip()
 
 
-@allure.step("Title matches expected title")
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of header')
+@allure.step("Title matches expected text")
 def test_header_second_version(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         text = driver.find_element(*MainPageLocators.LOGO_IMG).get_attribute("title")
@@ -33,6 +39,10 @@ def test_header_second_version(driver, url):
     else:
         pytest.skip()
 
+
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check if button free download is present")
 def test_button_free_download(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
@@ -46,6 +56,9 @@ def test_button_free_download(driver, url):
         pytest.skip()
 
 
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check if there is marketplace button")
 def test_visit_marketplace_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
@@ -54,6 +67,9 @@ def test_visit_marketplace_button(driver, url):
         pytest.skip()
 
 
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check if there is view demo button")
 def test_view_demo_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
@@ -63,24 +79,39 @@ def test_view_demo_button(driver, url):
         pytest.skip()
 
 
+@allure.feature('Main page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of text')
 @allure.step("Check if section learn more present")
 def test_featured_section(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         assert MainPage().is_featured_section_present(driver).text == 'LEARN MORE'
 
+
+@allure.feature('Market page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check if there is OpenCart Extension Store")
 def test_see_marketplace_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         MainPage().is_visit_marketplace_button_present(driver).click()
         assert MarketPage().is_marketheader_present(driver).text == 'Welcome to OpenCart Extension Store'
 
-@allure.step("Check if there is marketplace categories")
+
+@allure.feature('Market page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of categories')
+@allure.step("Check if there is extension")
 def test_marketplace_categories_present(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
         assert MarketPage().is_extension_category_present(driver) == True
     else:
         pytest.skip()
 
+
+@allure.feature('Market page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check if there is marketplace cards")
 def test_marketplace_productcard(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
@@ -88,7 +119,10 @@ def test_marketplace_productcard(driver, url):
     else:
         pytest.skip()
 
-@allure.step("Check if login page is present")
+
+@allure.feature('Login page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 def test_login_page_form_present(driver, url):
     if url == LOGIN_URL:
         LoginPage().is_login_form_present(driver)
@@ -96,6 +130,10 @@ def test_login_page_form_present(driver, url):
         LoginPage().is_password_field_present(driver).send_keys('password')
         LoginPage().is_forgot_link_present(driver).click()
 
+
+@allure.feature('Registration page')
+@allure.story('Validation of page objects')
+@allure.title('Validation of button')
 @allure.step("Check registration form")
 def test_check_registration_form(driver, url):
     if url == REGISTER_URL:
