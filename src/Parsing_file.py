@@ -1,9 +1,6 @@
 import datetime
 import json
-import os
 import re
-import subprocess
-import functools
 
 
 def parsing_file(filename):
@@ -12,7 +9,7 @@ def parsing_file(filename):
     # parsing file
     parced_dictionary = {}
     parced_dictionary_final = []
-    with open(f'{filename}'.format(filename=filename), 'r') as f_in:
+    with open(filename, 'r') as f_in:
         for line in f_in.readlines():
             try:
                 s = line.split('"')
@@ -21,13 +18,28 @@ def parsing_file(filename):
                      "endpoint_full": s[3],
                      "User_Agent": s[5], "duration": s[6]})
                 ip = re.search("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", s[0]).group()
-                date = re.search("\d\d\d\d:\d\d:\d\d:\d\d \+\d\d\d\d", s[0]).group()
-                method = re.search(r'(.*?) ', s[1]).group(1)
-                endpoint = re.search(r'/(.*?)HTTP', s[1]).group(1)
-                endpoint_full = s[3]
-                duration = s[6].split('\n')[0]
+                try:
+                    date = re.search("\d\d\d\d:\d\d:\d\d:\d\d \+\d\d\d\d", s[0]).group()
+                except AttributeError as ex:
+                    date = None
+                try:
+                    method = re.search(r'(.*?) ', s[1]).group(1)
+                except AttributeError as ex:
+                    method = None
+                try:
+                    endpoint = re.search(r'/(.*?)HTTP', s[1]).group(1)
+                except AttributeError as ex:
+                    endpoint = None
+                try:
+                    endpoint_full = s[3]
+                except AttributeError as ex:
+                    endpoint_full = None
+                try:
+                    duration = s[6].split('\n')[0]
+                except AttributeError as ex:
+                    duration = None
                 parced_dictionary_final.append({'ip': ip, 'date': date, "method": method, "endpoint": endpoint,
-                                                "endpoint_full": endpoint_full, "duration": int(duration)})
+                                                "endpoint_full": endpoint_full, "duration": duration})
             except IndexError as ex:
                 print(ex)
 
