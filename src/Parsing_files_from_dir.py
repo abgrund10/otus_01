@@ -1,18 +1,28 @@
 import argparse
-import os
+import glob
+import os.path
 
 import Parsing_file
 
-parser = argparse.ArgumentParser(description='Process access.log')
+files = []
 
-parser.add_argument('--target', action='store')
-args = parser.parse_args()
 
-target_files = []
+def main():
+    parser = argparse.ArgumentParser(description='Process command line arguments.')
+    parser.add_argument('indir')
+    args = parser.parse_args()
 
-if os.path.isfile(args.target):
-    target_files.append(args.target)
+    full_paths = [os.path.join(os.getcwd(), path) for path in args.indir]
+    files = set()
+    for indir in full_paths:
+        if os.path.isfile(indir):
+            files.add(indir)
+        else:
+            full_paths += glob.glob(indir + '/*')
 
-for target_file in target_files:
-    print(target_file)
-    ff = Parsing_file(target_file)
+    for file in files:
+        Parsing_file.parsing_file(file)
+
+
+if __name__ == "__main__":
+    main()
