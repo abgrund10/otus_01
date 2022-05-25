@@ -86,6 +86,8 @@ def test_view_demo_button(driver, url):
 def test_featured_section(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         assert MainPage().is_featured_section_present(driver).text == 'LEARN MORE'
+    else:
+        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
 
 
 @allure.feature('Market page')
@@ -96,6 +98,8 @@ def test_see_marketplace_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         MainPage().is_visit_marketplace_button_present(driver).click()
         assert MarketPage().is_marketheader_present(driver).text == 'Welcome to OpenCart Extension Store'
+    else:
+        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
 
 
 @allure.feature('Market page')
@@ -106,6 +110,7 @@ def test_marketplace_categories_present(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
         assert MarketPage().is_extension_category_present(driver) == True
     else:
+        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
         pytest.skip()
 
 
@@ -117,6 +122,7 @@ def test_marketplace_productcard(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
         assert MarketPage().is_product_card_present(driver) == True
     else:
+        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
         pytest.skip()
 
 

@@ -4,7 +4,10 @@ from datetime import datetime
 import allure
 import pytest
 import logging
+
+from packaging.requirements import URI
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 def pytest_addoption(parser):
@@ -46,17 +49,14 @@ def driver(request):
         else:
             raise Exception("Browser not found")
     else:
-        url_final = f"http://{runner}:4444/wd/hub"
+        url_final = "http://127.0.0.2:4444/wd/hub"  # .format(runner=runner)
         caps = {
-                "browserName": browser,
-                "screenResolution": "1280x1024",
-                "name": "agr tests",
-                "selenoid:options": {
-                    "sessionTimeout": "60s"
-                }
-            }
-        wd = webdriver.Remote(command_executor=url_final, desired_capabilities=caps)
-    allure.attach(body=json.dumps(wd), attachment_type=allure.attachment_type.JSON)
+            "browserName": "chrome",
+            "screenResolution": "1280x1024",
+            "name": "agr tests"
+        }
+        wd = webdriver.Remote(url_final, desired_capabilities=caps)
+        print(caps)
     return wd
 
 
