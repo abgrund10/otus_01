@@ -46,17 +46,16 @@ def driver(request):
         else:
             raise Exception("Browser not found")
     else:
-        url_final = f"http://{runner}:4444/wd/hub"
+        url_final = "http://127.0.0.2:4444/wd/hub"
         caps = {
-                "browserName": browser,
-                "screenResolution": "1280x1024",
-                "name": "agr tests",
-                "selenoid:options": {
-                    "sessionTimeout": "60s"
-                }
+            "browserName": browser,
+            "screenResolution": "1280x1024",
+            "name": "agr tests",
+            "selenoid:options": {
+                "sessionTimeout": "60s"
             }
+        }
         wd = webdriver.Remote(command_executor=url_final, desired_capabilities=caps)
-    allure.attach(body=json.dumps(wd), attachment_type=allure.attachment_type.JSON)
     return wd
 
 
