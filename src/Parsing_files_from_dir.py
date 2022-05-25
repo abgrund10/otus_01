@@ -1,6 +1,5 @@
 import os, fnmatch
 import argparse
-import glob
 import os.path
 
 import Parsing_file
@@ -16,13 +15,13 @@ def find(pattern, path1):
 
 
 def main():
-    files_list = set()
     parser = argparse.ArgumentParser(description='Process command line arguments.')
-    parser.add_argument('path', default=os.path.curdir)
+    parser.add_argument('--path')
     args = parser.parse_args()
-    path0 = '/home/tank34/PycharmProjects/pythonProject1/otus_01/src/files'
-    new_file = find('*.log', path0)
-    os.chdir(path0)
+    cwd = os.getcwd()
+    new_way = cwd + "/" + args.path
+    new_file = find('*.log', args.path)
+    os.chdir(new_way)
     for f in new_file:
         Parsing_file.parsing_file(f)
 
