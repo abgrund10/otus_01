@@ -1,13 +1,10 @@
-import json
-import os
 from datetime import datetime
 import allure
 import pytest
 import logging
-
-from packaging.requirements import URI
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 def pytest_addoption(parser):
@@ -49,7 +46,7 @@ def driver(request):
         else:
             raise Exception("Browser not found")
     else:
-        url_final = "http://127.0.0.2:4444/wd/hub"  # .format(runner=runner)
+        url_final = f"http://{runner}:4444/wd/hub"
         caps = {
             "browserName": "chrome",
             "screenResolution": "1280x1024",
@@ -58,6 +55,16 @@ def driver(request):
         wd = webdriver.Remote(url_final, desired_capabilities=caps)
         print(caps)
     return wd
+
+
+@allure.step("Verify element {button} on page.")
+def wait_and_return_button(wd, button):
+    try:
+        element = WebDriverWait(wd, 20).until(EC.visibility_of_element_located(button))
+        return element
+    except AssertionError:
+        allure.attach(name=wd.session_id, body=wd.get_screenshot_as_png(), attachment_type=allure.attachment_type.PNG)
+        raise AssertionError(f"Element {button} not found on page!")
 
 
 @pytest.fixture

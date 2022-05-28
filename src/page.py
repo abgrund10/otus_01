@@ -1,12 +1,10 @@
-import sys
-
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from locators import MainPageLocators, MarketPlaceLocators, LoginPageLocators, RegistrationPageLocators, \
-    AdminLoginPageLocators, AdminDashboardPageLocators, AdminAddProductPageLocators, AdminProductsPageLocators, \
-    AdminCustomerListLocators, AddNewCustomerLocators
-from common import wait_and_return_button
 import logging
+from selenium.webdriver.support.wait import WebDriverWait
+
+from conftest import wait_and_return_button
+from locators import MainPageLocators, MarketPlaceLocators, LoginPageLocators, RegistrationPageLocators, \
+    AdminDashboardPageLocators, AdminAddProductPageLocators, AdminProductsPageLocators, AddNewCustomerLocators, \
+    AdminCustomerListLocators
 
 
 class MainPage:

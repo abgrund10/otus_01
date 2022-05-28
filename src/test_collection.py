@@ -17,10 +17,7 @@ def test_header(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         main_page = MainPage()
         main_page.is_logo_present(driver)
-        try:
-            assert main_page.is_img_title_matches(driver) == 'OpenCart - Open Source Shopping Cart Solution'
-        except AssertionError:
-            allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
+        assert main_page.is_img_title_matches(driver) == 'OpenCart - Open Source Shopping Cart Solution'
     else:
         pytest.skip()
 
@@ -32,10 +29,7 @@ def test_header(driver, url):
 def test_header_second_version(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         text = driver.find_element(*MainPageLocators.LOGO_IMG).get_attribute("title")
-        try:
-            assert text == 'OpenCart - Open Source Shopping Cart Solution'
-        except AssertionError:
-            allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
+        assert text == 'OpenCart - Open Source Shopping Cart Solution'
     else:
         pytest.skip()
 
@@ -48,10 +42,7 @@ def test_button_free_download(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         main_page = MainPage()
         main_page.is_free_download_button_present(driver)
-        try:
-            assert main_page.is_free_download_button_present(driver).get_attribute("innerHTML") == 'Download'
-        except AssertionError:
-            allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
+        assert main_page.is_free_download_button_present(driver).get_attribute("innerHTML") == 'Download'
     else:
         pytest.skip()
 
@@ -86,8 +77,6 @@ def test_view_demo_button(driver, url):
 def test_featured_section(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         assert MainPage().is_featured_section_present(driver).text == 'LEARN MORE'
-    else:
-        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
 
 
 @allure.feature('Market page')
@@ -98,8 +87,6 @@ def test_see_marketplace_button(driver, url):
     if not any((REGISTER_URL, LOGIN_URL, ADMIN_URL)):
         MainPage().is_visit_marketplace_button_present(driver).click()
         assert MarketPage().is_marketheader_present(driver).text == 'Welcome to OpenCart Extension Store'
-    else:
-        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
 
 
 @allure.feature('Market page')
@@ -110,7 +97,6 @@ def test_marketplace_categories_present(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
         assert MarketPage().is_extension_category_present(driver) == True
     else:
-        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
         pytest.skip()
 
 
@@ -122,7 +108,6 @@ def test_marketplace_productcard(driver, url):
     if not any((REGISTER_URL, LOGIN_URL)):
         assert MarketPage().is_product_card_present(driver) == True
     else:
-        allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
         pytest.skip()
 
 
