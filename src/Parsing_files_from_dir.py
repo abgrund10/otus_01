@@ -19,16 +19,14 @@ def main():
     parser.add_argument('--path')
     args = parser.parse_args()
     if os.path.isdir(args.path):
-        cwd = os.getcwd()
-        new_way = cwd + "/" + args.path
         new_file = find('*.log', args.path)
-        os.chdir(new_way)
+        os.chdir(args.path)
         for f in new_file:
-            Parsing_file.parsing_file(f)
+            Parsing_file.ParceFile.parsing_file(f)
     elif os.path.isfile(args.path):
         os.chdir(os.path.dirname(args.path))
         filename = os.path.basename(args.path)
-        Parsing_file.parsing_file(filename)
+        Parsing_file.ParceFile.parsing_file(filename)
     else:
         raise Exception("Please check path to your file")
 
