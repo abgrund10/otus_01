@@ -1,0 +1,68 @@
+version: '3'
+services:
+  selenoid:
+    image: "aerokube/selenoid"
+    volumes:
+      - "./etc/selenoid/"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: [ "-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-container-network", "selenoid" ]
+    ports:
+        - "4444:4444"
+  selenoid-ui:
+    image: "aerokube/selenoid-ui:latest"
+    depends_on:
+      - selenoid
+    ports:
+      - '8081:8080'
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+  chrome:
+    image: "selenium/node-chrome:latest"
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenoid
+    environment:
+      - HUB_HOST=selenoid
+      - HUB_PORT=8080
+  firefox:
+      image: "selenium/node-firefox:latest"
+      volumes:
+        - /dev/shm:/dev/shm
+      depends_on:
+        - selenoid
+      environment:
+        - HUB_HOST=selenoid
+        - HUB_PORT=8080
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_opencart
+      - MARIADB_DATABASE=bitnami_opencart
+    volumes:
+      - 'mariadb_data:/bitnami/mariadb'
+  opencart:
+      image: docker.io/bitnami/opencart:3
+      ports:
+        - '443:8443'
+      environment:
+        - OPENCART_HOST=localhost
+        - OPENCART_DATABASE_HOST=mariadb
+        - OPENCART_DATABASE_PORT_NUMBER=3306
+        - OPENCART_DATABASE_USER=bn_opencart
+        - OPENCART_DATABASE_NAME=bitnami_opencart
+        # ALLOW_EMPTY_PASSWORD is recommended only for development.
+        - ALLOW_EMPTY_PASSWORD=yes
+      volumes:
+        - 'opencart_data:/bitnami/opencart'
+        - 'opencart_storage_data:/bitnami/opencart_storage/'
+      depends_on:
+        - mariadb
+volumes:
+    mariadb_data:
+      driver: local
+    opencart_data:
+      driver: local
+    opencart_storage_data:
+      driver: local

@@ -1,0 +1,20 @@
+{
+  "chrome": {
+    "default": "latest",
+    "versions": {
+      "latest": {
+        "image": "selenoid/chrome",
+        "port": "4444"
+      }
+    }
+  },
+    "firefox": {
+    "default": "latest",
+    "versions": {
+      "79.0": {
+        "image": "selenoid/vnc:firefox_100.0",
+        "port": "4444"
+      }
+    }
+  }
+}
