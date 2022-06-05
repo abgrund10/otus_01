@@ -27,6 +27,8 @@ RUN set -x ; addgroup -g 101 -S "$GRP" && \
 #    && apk add --no-cache shadow
 #CMD ["/bin/bash", "/bin/sh"]
 
+ARG container_id="docker ps --format \"{{.ID}}\""
+COPY src/test_collection.py ${container_id}
 CMD ["python3", "./src/test_collection.py"]
 COPY ./requirements1.txt ./
 RUN apk add py3-pip
