@@ -3,6 +3,7 @@ import pytest
 import logging
 from selenium import webdriver
 
+url = "https://nasport.fun/"
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
@@ -21,20 +22,15 @@ def browser(request):
 
 @pytest.fixture(scope='session')
 def driver(request):
-    runner = request.config.getoption("--way_to_execute")
     browser = request.config.getoption("--browser")
-    if runner == 'localhost':
-        url_final = "http://localhost:4444/wd/hub"
-        if browser == "chrome":
-            wd = webdriver.Chrome().get(url_final)
-        elif browser == "firefox":
-            wd = webdriver.Firefox().get(url_final)
-        elif browser == "opera":
-            wd = webdriver.Opera().get(url_final)
-
-        else:
-            raise Exception("Browser not found")
-    return wd
+    if browser == "chrome":
+        return webdriver.Chrome().get(url)
+    elif browser == "firefox":
+        return webdriver.Firefox().get(url)
+    elif browser == "opera":
+        return webdriver.Opera().get(url)
+    else:
+        raise Exception("Browser not found")
 
 
 @pytest.fixture

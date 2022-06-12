@@ -1,9 +1,7 @@
-from telnetlib import EC
 import allure
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from locators import LoginpageN, SignPage, City, Requests
-
-url = "https://nasport.fun/"
 
 
 @allure.feature('Login page')
@@ -12,7 +10,6 @@ url = "https://nasport.fun/"
 @allure.step("SignIn option is present")
 def test_main_page(driver):
     try:
-        driver.get(url)
         WebDriverWait(driver, 20).until(EC.presence_of_element_located(LoginpageN.INSTAGRAMLINK))
         driver.find_element(LoginpageN.SIGNIN).click()
     except AssertionError:
