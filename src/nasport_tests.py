@@ -1,8 +1,6 @@
 from telnetlib import EC
-
 import allure
 from selenium.webdriver.support.wait import WebDriverWait
-
 from locators import LoginpageN, SignPage, City, Requests
 
 url = "https://nasport.fun/"
