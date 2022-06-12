@@ -11,6 +11,7 @@ def pytest_addoption(parser):
     parser.addoption("--url", action='store', default='http://www.opencart.com')
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--way_to_execute', action='store', default='localhost')
+    parser.addoption('--browser_version', action='store', default='latest')
 
 
 @pytest.fixture(scope='session')
@@ -34,12 +35,17 @@ def browser(request):
 def driver(request):
     runner = request.config.getoption("--way_to_execute")
     browser = request.config.getoption("--browser")
+    browserversion = request.config.getoption("--browser_version")
     if runner == 'localhost':
         url_final = "http://localhost:4444/wd/hub"
         if browser == "chrome":
-            wd = webdriver.Chrome().get(url_final)
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.add_argument(browserversion)
+            wd = webdriver.Chrome(chrome_options=chrome_options).get(url_final)
         elif browser == "firefox":
-            wd = webdriver.Firefox().get(url_final)
+            firefox_options = webdriver.FirefoxOptions()
+            firefox_options.add_argument(browserversion)
+            wd = webdriver.Firefox(firefox_options=firefox_options).get(url_final)
         elif browser == "opera":
             wd = webdriver.Opera().get(url_final)
 
