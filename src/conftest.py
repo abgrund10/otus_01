@@ -3,6 +3,7 @@ import allure
 import pytest
 import logging
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -37,11 +38,11 @@ def driver(request):
     browser = request.config.getoption("--browser")
     browserversion = request.config.getoption("--browser_version")
     if runner == 'localhost':
-        url_final = "http://localhost:4444/wd/hub"
+        url_final = url
         if browser == "chrome":
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument(browserversion)
-            wd = webdriver.Chrome(chrome_options=chrome_options).get(url_final)
+            options = webdriver.ChromeOptions()
+            options.add_argument(browserversion)
+            wd = webdriver.Chrome(chrome_options=options).get(url_final)
         elif browser == "firefox":
             firefox_options = webdriver.FirefoxOptions()
             firefox_options.add_argument(browserversion)
