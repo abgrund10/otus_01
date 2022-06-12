@@ -1,7 +1,6 @@
 from telnetlib import EC
 
 import allure
-import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 
 from locators import LoginpageN, SignPage, City, Requests

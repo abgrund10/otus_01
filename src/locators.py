@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 class LoginpageN(object):
     SIGNIN = (By.CLASS_NAME, 'p-button-label p-c')
     INSTAGRAMLINK = (By.LINK_TEXT, "Instagram")
