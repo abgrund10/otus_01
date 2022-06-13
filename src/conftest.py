@@ -33,13 +33,13 @@ def driver(request):
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
-        wd = webdriver.Firefox(options=firefox_options)
+        wd = webdriver.Firefox(options=firefox_options).get(url)
     elif browser == "opera":
-        wd = webdriver.Opera()
+        wd = webdriver.Opera().get(url)
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
-    return wd.get(url)
+    return wd
 
 
 @pytest.fixture(scope='session')
