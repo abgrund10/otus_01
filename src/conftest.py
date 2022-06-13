@@ -14,12 +14,6 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope='session')
-def url(request):
-    with allure.step(f'GET request to:'):
-        return request.config.getoption("--url")
-    
-
-@pytest.fixture(scope='session')
 def browser(request):
     logger = logging.getLogger('driver')
     driver.test_name = request.node.name
