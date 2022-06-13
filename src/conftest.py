@@ -1,4 +1,6 @@
 from datetime import datetime
+
+import allure
 import pytest
 import logging
 from selenium import webdriver
@@ -10,6 +12,12 @@ def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--browser_version', action='store', default='101.0')
 
+
+@pytest.fixture(scope='session')
+def url(request):
+    with allure.step(f'GET request to:'):
+        return request.config.getoption("--url")
+    
 
 @pytest.fixture(scope='session')
 def browser(request):
