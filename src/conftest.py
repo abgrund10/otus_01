@@ -1,6 +1,4 @@
 from datetime import datetime
-
-import allure
 import pytest
 import logging
 from selenium import webdriver
@@ -44,6 +42,6 @@ def driver(request):
     return wd.get(url)
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def test_teardown(driver):
     driver.quit()
