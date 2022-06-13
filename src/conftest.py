@@ -2,6 +2,7 @@ from datetime import datetime
 import pytest
 import logging
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 def pytest_addoption(parser):
@@ -25,7 +26,7 @@ def driver(request):
     browser = request.config.getoption("--browser")
     browserversion = request.config.getoption("--browser_version")
     if browser == "chrome":
-        options = webdriver.ChromeOptions()
+        options = Options()
         options.add_argument(browserversion)
         wd = webdriver.Chrome(options=options)
     elif browser == "firefox":
