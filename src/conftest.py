@@ -24,11 +24,11 @@ def browser(request):
 def driver(request):
     browser = request.config.getoption("--browser")
     if browser == "chrome":
-        return webdriver.Chrome().get(url)
+        webdriver.Chrome().get(url)
     elif browser == "firefox":
-        return webdriver.Firefox().get(url)
+        webdriver.Firefox().get(url)
     elif browser == "opera":
-        return webdriver.Opera().get(url)
+        webdriver.Opera().get(url)
     else:
         raise Exception("Browser not found")
 
