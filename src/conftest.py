@@ -30,8 +30,8 @@ def driver(request):
         wd = webdriver.Firefox()
     elif browser == "opera":
         wd = webdriver.Opera()
-    # else:
-    #     raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
+    else:
+        raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
     return wd.get(url)
 
