@@ -3,8 +3,6 @@ import pytest
 import logging
 from selenium import webdriver
 
-url = "https://nasport.fun/"
-
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
@@ -29,13 +27,13 @@ def driver(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.add_argument(browserversion)
-        wd = webdriver.Chrome(options=options).get(url)
+        wd = webdriver.Chrome(options=options)
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
-        wd = webdriver.Firefox(options=firefox_options).get(url)
+        wd = webdriver.Firefox(options=firefox_options)
     elif browser == "opera":
-        wd = webdriver.Opera().get(url)
+        wd = webdriver.Opera()
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
