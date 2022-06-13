@@ -21,7 +21,7 @@ def browser(request):
     return request.config.getoption("--browser")
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def driver(request):
     browser = request.config.getoption("--browser")
     if browser == "chrome":
@@ -34,3 +34,8 @@ def driver(request):
     #     raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
     return wd.get(url)
+
+
+@pytest.fixture
+def test_teardown(driver):
+    driver.quit()
