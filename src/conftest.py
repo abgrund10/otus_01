@@ -29,7 +29,7 @@ def driver(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.add_argument(browserversion)
-        wd = webdriver.Chrome(options=options)
+        wd = webdriver.Chrome(options=options).get(url)
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
