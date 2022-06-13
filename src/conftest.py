@@ -25,13 +25,12 @@ def browser(request):
 def driver(request):
     browser = request.config.getoption("--browser")
     if browser == "chrome":
-        wd = webdriver.Chrome()
+        wd = webdriver.Chrome().get(url)
     elif browser == "firefox":
-        wd = webdriver.Firefox()
+        wd = webdriver.Firefox().get(url)
     elif browser == "opera":
-        wd = webdriver.Opera()
+        wd = webdriver.Opera().get(url)
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
-    wd.get(url)
 
     return wd
