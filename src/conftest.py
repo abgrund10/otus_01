@@ -8,6 +8,7 @@ url = "https://nasport.fun/"
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
+    parser.addoption('--browser_version', action='store', default='101.0')
 
 
 @pytest.fixture(scope='session')
@@ -24,10 +25,15 @@ def browser(request):
 @pytest.fixture(scope='session')
 def driver(request):
     browser = request.config.getoption("--browser")
+    browserversion = request.config.getoption("--browser_version")
     if browser == "chrome":
-        wd = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument(browserversion)
+        wd = webdriver.Chrome(options=options)
     elif browser == "firefox":
-        wd = webdriver.Firefox()
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.add_argument(browserversion)
+        wd = webdriver.Firefox(options=firefox_options)
     elif browser == "opera":
         wd = webdriver.Opera()
     else:
