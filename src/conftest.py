@@ -12,17 +12,17 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope='session')
 def browser(request):
-    return request.config.getoption("--browser")
-
-
-@pytest.fixture
-def driver(request):
     logger = logging.getLogger('driver')
     driver.test_name = request.node.name
     logger.addHandler(logging.FileHandler(driver.test_name))
     logger.info(f"{logger.name} ===> Test {driver.test_name} started at {datetime.now()}")
     driver.log_level = "INFO"
     driver.log_path = f"logs/{driver.test_name}_{datetime.now()}.log"
+    return request.config.getoption("--browser")
+
+
+@pytest.fixture
+def driver(request):
     browser = request.config.getoption("--browser")
     if browser == "chrome":
         wd = webdriver.Chrome()
