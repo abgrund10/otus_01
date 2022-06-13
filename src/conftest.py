@@ -12,7 +12,7 @@ def pytest_addoption(parser):
     parser.addoption("--url", action='store', default='http://www.opencart.com')
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--way_to_execute', action='store', default='localhost')
-    parser.addoption('--browser_version', action='store', default='latest')
+    parser.addoption('--browser_version', action='store', default='101.0')
 
 
 @pytest.fixture(scope='session')
@@ -42,7 +42,7 @@ def driver(request):
         if browser == "chrome":
             options = webdriver.ChromeOptions()
             options.add_argument(browserversion)
-            wd = webdriver.Chrome(chrome_options=options).get(url_final)
+            wd = webdriver.Chrome(options=options).get(url_final)
         elif browser == "firefox":
             firefox_options = webdriver.FirefoxOptions()
             firefox_options.add_argument(browserversion)
@@ -57,7 +57,8 @@ def driver(request):
         caps = {
             "browserName": "chrome",
             "screenResolution": "1280x1024",
-            "name": "agr tests"
+            "name": "agr tests",
+            "browserVersion": f"{browserversion}"
         }
         wd = webdriver.Remote(url_final, desired_capabilities=caps)
         print(caps)
