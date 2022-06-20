@@ -38,17 +38,17 @@ def driver(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.add_argument(browserversion)
-        wd = webdriver.Chrome(options=options)
+        wd = webdriver.Chrome(options=options).get(url_final)
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
-        wd = webdriver.Firefox(options=firefox_options)
+        wd = webdriver.Firefox(options=firefox_options).get(url_final)
     elif browser == "opera":
-        wd = webdriver.Opera()
+        wd = webdriver.Opera().get(url_final)
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
-    return wd.get(url_final)
+    return wd
 
 
 @pytest.fixture(scope='session')
