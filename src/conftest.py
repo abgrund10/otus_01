@@ -34,22 +34,23 @@ def browser(request):
 def driver(request):
     browser = request.config.getoption("--browser")
     browserversion = request.config.getoption("--browser_version")
+    url_final = url
     if browser == "chrome":
         options = Options()
         options.add_argument(browserversion)
-        wd = webdriver.Chrome(options=options).get(url)
+        wd = webdriver.Chrome(options=options)
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
-        wd = webdriver.Firefox(options=firefox_options).get(url)
+        wd = webdriver.Firefox(options=firefox_options)
     elif browser == "opera":
-        wd = webdriver.Opera().get(url)
+        wd = webdriver.Opera()
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
-    return wd
+    return wd.get(url_final)
 
 
 @pytest.fixture(scope='session')
-def test_teardown(driver):
+def test_teardown(driver, url):
     driver.quit()
