@@ -6,7 +6,7 @@ from selenium import webdriver
 
 
 def pytest_addoption(parser):
-    parser.addoption("--url", action='store', default="https://nasport.fun/")
+    parser.addoption("--url", action='store', default='https://nasport.fun/')
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--browser_version', action='store', default='101.0')
 

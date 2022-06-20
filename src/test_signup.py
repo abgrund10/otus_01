@@ -9,7 +9,7 @@ n = random.randint(0, 220)
 @allure.story('Validation of page objects')
 @allure.title('Validation of main page')
 @allure.step("SignIn option is present")
-def test_main_page(driver):
+def test_main_page(driver, url):
     try:
         driver.find_element_by_css_selector(LoginPage.Insta_link)
     except AssertionError:
@@ -20,7 +20,7 @@ def test_main_page(driver):
 @allure.story('Validation of page objects')
 @allure.title('Validation of back button')
 @allure.step('Validation of functionality of return')
-def test_signin_back(driver):
+def test_signin_back(driver, url):
     try:
         driver.find_element_by_xpath(LoginPage.SIGNIN).click()
         driver.find_element_by_css_selector(SignPage.BackButton).click()
