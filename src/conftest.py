@@ -1,15 +1,22 @@
 from datetime import datetime
+
+import allure
 import pytest
 import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-url = "https://nasport.fun/"
-
 
 def pytest_addoption(parser):
+    parser.addoption("--url", action='store', default='"https://nasport.fun/"')
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--browser_version', action='store', default='101.0')
+
+
+@pytest.fixture(scope='session')
+def url(request):
+    with allure.step(f'POST request to:'):
+        return request.config.getoption("--url")
 
 
 @pytest.fixture(scope='session')
@@ -34,9 +41,9 @@ def driver(request):
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)
-        wd = webdriver.Firefox(options=firefox_options)
+        wd = webdriver.Firefox(options=firefox_options).get(url)
     elif browser == "opera":
-        wd = webdriver.Opera()
+        wd = webdriver.Opera().get(url)
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
