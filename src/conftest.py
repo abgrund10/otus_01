@@ -1,10 +1,8 @@
 from datetime import datetime
-
 import allure
 import pytest
 import logging
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 
 def pytest_addoption(parser):
@@ -15,7 +13,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope='session')
 def url(request):
-    with allure.step(f'POST request to:'):
+    with allure.step(f'GET request to:'):
         return request.config.getoption("--url")
 
 
@@ -45,12 +43,13 @@ def driver(request):
         wd = webdriver.Firefox(options=firefox_options).get(url_final)
     elif browser == "opera":
         wd = webdriver.Opera().get(url_final)
+
     else:
         raise Exception("Unknown browser. Please select from following list: chrome, firefox, opera")
 
     return wd
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture
 def test_teardown(driver, url):
     driver.quit()
