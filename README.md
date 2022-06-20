@@ -1,1 +1,1 @@
-# otus_01
+# this is simple project to test simple web page
