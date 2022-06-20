@@ -4,6 +4,8 @@ import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+url = "https://nasport.fun/"
+
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
@@ -28,7 +30,7 @@ def driver(request):
     if browser == "chrome":
         options = Options()
         options.add_argument(browserversion)
-        wd = webdriver.Chrome(options=options)
+        wd = webdriver.Chrome(options=options).get(url)
     elif browser == "firefox":
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument(browserversion)

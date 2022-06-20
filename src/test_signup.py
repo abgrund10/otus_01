@@ -3,7 +3,6 @@ from locators import LoginPage, SignPage, City, Requests
 import random
 
 n = random.randint(0, 220)
-url = "https://nasport.fun/"
 
 
 @allure.feature('Login page')
@@ -12,7 +11,7 @@ url = "https://nasport.fun/"
 @allure.step("SignIn option is present")
 def test_main_page(driver):
     try:
-        driver.get(url)
+      #  driver.get(url)
         driver.find_element_by_css_selector(LoginPage.Insta_link)
     except AssertionError:
         allure.attach("screenshot", attachment_type=allure.attachment_type.PNG)
