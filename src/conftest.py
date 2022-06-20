@@ -36,7 +36,7 @@ def driver(request):
     browserversion = request.config.getoption("--browser_version")
     url_final = url
     if browser == "chrome":
-        options = Options()
+        options = webdriver.ChromeOptions()
         options.add_argument(browserversion)
         wd = webdriver.Chrome(options=options)
     elif browser == "firefox":
