@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qs
 from http import HTTPStatus
 
 HOST = "127.0.0.1"
-PORT = 65431
+PORT = 65432
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -17,7 +17,7 @@ while True:
         break
     headers, body = string.split('\r\n\r\n')
     status_line, *headers = headers.split('\r\n')
-    method, url, protocol = string.split()
+    method, url, protocol = status_line.split()
     status = HTTPStatus(200)
     query = urlparse(url).query
     params = parse_qs(query)
@@ -26,10 +26,22 @@ while True:
             code = int(params['status'][0])
             status = HTTPStatus(code)
         except ValueError as error:
-            pass
+            resp_body = '\r\n'.join([
+                f'Request Method: {method}',
+                f'Request Source: {addr}',
+                f'Response Status: {status}',
+                *headers
+            ])
+    resp_headers = '\r\n'.join([
+        f'{protocol} {status}',
+        'Content-Type: text/plain',
+        f'Content-Length: {len(resp_body)}'
+    ])
 
-    response_headers = "Content-Type: text/html; charset=utf-8\n".encode("utf-8")
-    conn.send(response_headers + f"Request Method: {method}\n"
-                                 f"Request Source: ({HOST},{PORT})\n"
-                                 f"Response Status: {status.value} {status.phrase}".encode("utf-8"))
+    resp_msg = '\r\n\r\n'.join([
+        resp_headers,
+        resp_body
+    ])
+    conn.send(resp_msg.encode('utf-8'))
+
 conn.close()
