@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qs
 from http import HTTPStatus
 
 HOST = "127.0.0.1"
-PORT = 65432
+PORT = 65431
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -26,14 +26,16 @@ while True:
             code = int(params['status'][0])
             status = HTTPStatus(code)
         except ValueError as error:
-            resp_body = '\r\n'.join([
-                f'Request Method: {method}',
-                f'Request Source: {addr}',
-                f'Response Status: {status}',
-                *headers
-            ])
+            pass
+    resp_status = f'{status.value} {status.phrase}'
+    resp_body = '\r\n'.join([
+        f'Request Method: {method}',
+        f'Request Source: {addr}',
+        f'Response Status: {resp_status}',
+        *headers
+    ])
     resp_headers = '\r\n'.join([
-        f'{protocol} {status}',
+        f'{protocol} {resp_status}',
         'Content-Type: text/plain',
         f'Content-Length: {len(resp_body)}'
     ])
