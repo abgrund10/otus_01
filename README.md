@@ -1,1 +1,3 @@
-# otus_01
+# read me please
+
+this is a socket exercise
